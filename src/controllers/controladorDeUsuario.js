@@ -2,31 +2,31 @@ const servicoDeUsuario = require("../services/servicoDeUsuario");
 const { HttpError } = require("../errors/HttpError");
 
 class ControladorDeUsuario {
-  pegarTodos(_req, res) {
-    const usuarios = servicoDeUsuario.buscarTodos();
+  async pegarTodos(_req, res) {
+    const usuarios = await servicoDeUsuario.buscarTodos();
 
     res.status(200).json(usuarios);
   }
 
-  pegarUmPeloID(req, res) {
-    const id = req.params.id;
-    const usuario = servicoDeUsuario.pegarPeloID(id);
+  async pegarUmPeloID(req, res) {
+    const id =  req.params.id;
+    const usuario = await servicoDeUsuario.pegarPeloID(id);
 
     res.status(200).json(usuario);
   }
 
-  cadastrar(req, res) {
-    const { nome, email, cpf, senha } = req.body;
-    const resposta = servicoDeUsuario.cadastrar(nome, email, cpf, senha);
+  async cadastrar(req, res) {
+    const { nome, email, cpf, senha } = await req.body;
+    const resposta = await servicoDeUsuario.cadastrar(nome, email, cpf, senha);
 
     if (resposta.error) res.status(400).json(resposta.error);
 
     res.status(201).json(resposta);
   }
 
-  conectar(req, res) {
+  async conectar(req, res) {
     const { email, senha } = req.body;
-    const resposta = servicoDeUsuario.conectar(email, senha);
+    const resposta = await servicoDeUsuario.conectar(email, senha);
 
     res.status(200).json(resposta);
   }

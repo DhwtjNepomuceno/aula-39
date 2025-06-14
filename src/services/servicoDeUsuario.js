@@ -5,16 +5,16 @@ const { Usuario } = require("../models/Usuario");
 const { HttpError } = require("../errors/HttpError");
 
 class ServicoDeUsuario {
-  buscarTodos() {
-    return RepositorioDeUsuario.buscarTodos();
+  async buscarTodos() {
+    return await RepositorioDeUsuario.buscarTodos();
   }
 
-  pegarPeloID(id) {
+  async pegarPeloID(id) {
     if (!id) {
       throw new HttpError(400, "O ID não foi informado");
     }
 
-    const usuario = RepositorioDeUsuario.buscarPeloId(id);
+    const usuario = await RepositorioDeUsuario.buscarPeloId(id);
     if (!usuario) {
       throw new HttpError(404, "Usuário não encontrado!");
     }
